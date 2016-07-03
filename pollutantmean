@@ -1,0 +1,21 @@
+pollutantmean <- function(directory, pollutant, id = 1:332){
+  fileList <- list.files(directory)
+  nitrate_values <- c()
+  sulfate_values <- c()
+  for(monitor in id){
+    filepath <- file.path(directory, fileList[monitor])
+    pollution_data <- read.csv(filepath)
+    nitrate_values <- c(nitrate_values, pollution_data$nitrate)
+    sulfate_values <- c(sulfate_values, pollution_data$sulfate)
+  }
+  nitrate_mean <- mean(nitrate_values,na.rm = TRUE)
+  sulfate_mean <- mean(sulfate_values, na.rm = TRUE)
+  if(pollutant == "nitrate")
+    result <- mean(nitrate_mean)
+  else if(pollutant == "sulfate")
+    result <- mean(sulfate_mean)
+  else
+    result <- "invalid input"
+  result
+}
+## coursera pollutantmean
